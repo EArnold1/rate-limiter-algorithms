@@ -8,12 +8,11 @@ function refill(key: string, data: Client) {
 
   const now = new Date();
   const lastRequest = client.lastRequest;
-  const diff = Math.abs(now.getTime() - lastRequest.getTime());
-  const minutes = Math.floor(diff / 1000 / 60);
-  const timer = store.timer / 60000;
+  const elapsedTime = Math.abs(now.getTime() - lastRequest.getTime());
+  const timer = store.timer;
 
-  if (minutes >= timer) {
-    const refilledTokens = Math.floor((minutes * store.refillRate) / timer);
+  if (elapsedTime >= timer) {
+    const refilledTokens = Math.floor((elapsedTime * store.refillRate) / timer);
     client.tokens += Math.min(refilledTokens, store.capacity);
     store.set(key, client);
   }
