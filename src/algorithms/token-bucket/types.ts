@@ -1,3 +1,5 @@
+import Store from '../../types/store';
+
 type Client = {
   tokens: number;
   lastRequest: Date;
@@ -9,17 +11,10 @@ type TokenBucketConfig = {
   timer: number;
 };
 
-interface Store {
+interface TokenBucketStore extends Store<Client, TokenBucketConfig> {
   capacity: number;
   timer: number;
   refillRate: number;
-
-  clients: Map<string, Client>;
-
-  init: (cfg: TokenBucketConfig) => void;
-
-  set: (key: string, client: Client) => void;
-  getClient: (key: string) => Client;
 }
 
-export { Store, TokenBucketConfig, Client };
+export { TokenBucketStore, TokenBucketConfig, Client };

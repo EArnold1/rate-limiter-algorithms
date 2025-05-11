@@ -1,3 +1,5 @@
+import Store from '../../types/store';
+
 type LeakyBucketConfig = {
   capacity: number; // bucket max
   leakRate: number; // units per second
@@ -9,17 +11,10 @@ type Client = {
   lastRequest: Date;
 };
 
-interface Store {
+interface LeakyBucketStore extends Store<Client, LeakyBucketConfig> {
   capacity: number;
   leakRate: number;
   fillRate?: number;
-
-  clients: Map<string, Client>;
-
-  init: (cfg: LeakyBucketConfig) => void;
-
-  set: (key: string, client: Client) => void;
-  getClient: (key: string) => Client;
 }
 
-export { Client, LeakyBucketConfig, Store };
+export { Client, LeakyBucketConfig, LeakyBucketStore };

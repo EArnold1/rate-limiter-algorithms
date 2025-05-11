@@ -1,6 +1,6 @@
-import { Client, LeakyBucketConfig, Store } from './types';
+import { Client, LeakyBucketConfig, LeakyBucketStore } from './types';
 
-class MemoryStore implements Store {
+class MemoryStore implements LeakyBucketStore {
   capacity!: number;
   leakRate!: number;
   fillRate = 1; // for each request fill by 1

@@ -1,6 +1,6 @@
-import { Client, Store, TokenBucketConfig } from './types';
+import { Client, TokenBucketStore, TokenBucketConfig } from './types';
 
-class MemoryStore implements Store {
+class MemoryStore implements TokenBucketStore {
   capacity!: number;
   timer!: number;
   refillRate!: number;
