@@ -34,7 +34,7 @@ export function limiter(cfg: LeakyBucketConfig) {
       });
 
       // overflow
-      if (client.bucket >= store.capacity) {
+      if (client.bucket > store.capacity) {
         throw new Error('you have made too many requests');
       }
     },
