@@ -13,7 +13,7 @@ function refill(key: string, data: Client) {
 
   if (elapsedTime >= timer) {
     const refilledTokens = Math.floor((elapsedTime * store.refillRate) / timer);
-    client.tokens += Math.min(refilledTokens, store.capacity);
+    client.tokens = Math.min(refilledTokens, store.capacity);
     store.set(key, client);
   }
 }
