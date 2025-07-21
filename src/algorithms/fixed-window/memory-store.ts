@@ -2,7 +2,7 @@ import { Client, FixedWindowConfig, FixedWindowStore } from './types';
 
 class MemoryStore implements FixedWindowStore {
   maxRequests!: number;
-  windowSize!: number; // interval
+  windowSize!: number; // interval (e.g n requests in 1 minute window)
 
   clients = new Map<string, Client>();
 

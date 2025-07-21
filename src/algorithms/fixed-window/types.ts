@@ -10,9 +10,8 @@ type Client = {
   windowStart: Date;
 };
 
-interface FixedWindowStore extends Store<Client, FixedWindowConfig> {
-  maxRequests: number;
-  windowSize: number; // interval
-}
+interface FixedWindowStore
+  extends Store<Client, FixedWindowConfig>,
+    FixedWindowConfig {}
 
 export { FixedWindowStore, FixedWindowConfig, Client };

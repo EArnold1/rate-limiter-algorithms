@@ -5,11 +5,11 @@ import { fixedWindow } from '../middlewares/fixed-window';
 
 const router = Router();
 
-router.get('/token-bucket', tokenBucket, (req, res) => {
+router.get('/token-bucket', tokenBucket, (_, res) => {
   res.status(200).json({ data: { message: 'token bucket algorithm' } });
 });
 
-router.get('/leaky-bucket', leakyBucket, (req, res) => {
+router.get('/leaky-bucket', leakyBucket, (_, res) => {
   res.status(200).json({ data: { message: 'leaky bucket algorithm' } });
 });
 

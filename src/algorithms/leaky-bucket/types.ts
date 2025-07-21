@@ -11,10 +11,8 @@ type Client = {
   lastRequest: Date;
 };
 
-interface LeakyBucketStore extends Store<Client, LeakyBucketConfig> {
-  capacity: number;
-  leakRate: number;
-  fillRate?: number;
-}
+interface LeakyBucketStore
+  extends Store<Client, LeakyBucketConfig>,
+    LeakyBucketConfig {}
 
 export { Client, LeakyBucketConfig, LeakyBucketStore };

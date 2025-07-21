@@ -8,13 +8,11 @@ type Client = {
 type TokenBucketConfig = {
   capacity: number;
   refillRate: number;
-  timer: number;
+  timer: number; // refill timer
 };
 
-interface TokenBucketStore extends Store<Client, TokenBucketConfig> {
-  capacity: number;
-  timer: number;
-  refillRate: number;
-}
+interface TokenBucketStore
+  extends Store<Client, TokenBucketConfig>,
+    TokenBucketConfig {}
 
 export { TokenBucketStore, TokenBucketConfig, Client };
