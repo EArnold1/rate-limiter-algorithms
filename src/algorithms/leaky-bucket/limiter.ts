@@ -1,5 +1,7 @@
+import { Request } from 'express';
 import { MemoryStore } from './memory-store';
 import { Client, LeakyBucketConfig } from './types';
+import { getIpAddress } from '../../helpers';
 
 const store = new MemoryStore();
 
@@ -19,24 +21,27 @@ function leak_bucket(key: string, data: Client) {
   }
 }
 
+function makeRequest(req: Request) {
+  const key = getIpAddress(req);
+  const client = store.getClient(key);
+
+  leak_bucket(key, client);
+
+  store.set(key, {
+    bucket: client.bucket + store.fillRate,
+    lastRequest: new Date(),
+  });
+
+  // overflow
+  if (client.bucket > store.capacity) {
+    throw new Error('you have made too many requests');
+  }
+}
+
 export function limiter(cfg: LeakyBucketConfig) {
   store.init(cfg);
 
   return {
-    make_request: (key: string) => {
-      const client = store.getClient(key);
-
-      leak_bucket(key, client);
-
-      store.set(key, {
-        bucket: client.bucket + store.fillRate,
-        lastRequest: new Date(),
-      });
-
-      // overflow
-      if (client.bucket > store.capacity) {
-        throw new Error('you have made too many requests');
-      }
-    },
+    makeRequest,
   };
 }

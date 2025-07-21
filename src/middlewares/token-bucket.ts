@@ -3,16 +3,15 @@ import { limiter as tokenBucketLimiter } from '../algorithms/token-bucket/limite
 
 // An example on how to use the token bucket  limiter
 
-const { make_request } = tokenBucketLimiter({
+const { makeRequest } = tokenBucketLimiter({
   capacity: 5,
   refillRate: 1,
   timer: 1 * 60 * 1000,
 });
 
-const tokenBucketExample: RequestHandler = (req, res, next) => {
-  // req.ip ?? req.headers['x-forwarded-for'] ?? req.socket.remoteAddress;
+const tokenBucketMiddleware: RequestHandler = (req, res, next) => {
   try {
-    make_request(req.ip!);
+    makeRequest(req);
     next();
   } catch (error) {
     let error_message = 'too many requests';
@@ -23,4 +22,4 @@ const tokenBucketExample: RequestHandler = (req, res, next) => {
   }
 };
 
-export { tokenBucketExample as tokenBucket };
+export { tokenBucketMiddleware as tokenBucket };

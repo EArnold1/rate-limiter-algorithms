@@ -1,15 +1,13 @@
+import { Request } from 'express';
 import { MemoryStore } from './memory-store';
 import { FixedWindowConfig } from './types';
+import { getIpAddress } from '../../helpers';
 
 const store = new MemoryStore();
 
-export function limiter(cfg: FixedWindowConfig) {
-  store.init(cfg);
+function makeRequest(req: Request) {
+  const key = getIpAddress(req);
 
-  return { make_request };
-}
-
-function make_request(key: string) {
   const client = store.getClient(key);
 
   const now = new Date();
@@ -28,4 +26,10 @@ function make_request(key: string) {
 
   client.requests += 1;
   store.set(key, client);
+}
+
+export function limiter(cfg: FixedWindowConfig) {
+  store.init(cfg);
+
+  return { makeRequest };
 }

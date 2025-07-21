@@ -5,7 +5,7 @@ import router from './routes/app.routes';
 
 const app = express();
 
-app.enable('trust proxy');
+app.enable('trust proxy'); // used to expose information provided by reverse proxy
 app.use('/', router);
 
 const PORT = process.env.PORT;

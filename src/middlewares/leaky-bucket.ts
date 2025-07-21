@@ -3,14 +3,14 @@ import { limiter as leakyBucketLimiter } from '../algorithms/leaky-bucket/limite
 
 // An example on how to use the leaky bucket limiter
 
-const { make_request } = leakyBucketLimiter({
+const { makeRequest } = leakyBucketLimiter({
   capacity: 5,
   leakRate: 1 * 60 * 1000,
 });
 
-const leakyBucketExample: RequestHandler = (req, res, next) => {
+const leakyBucketMiddleware: RequestHandler = (req, res, next) => {
   try {
-    make_request(req.ip!);
+    makeRequest(req);
     next();
   } catch (error) {
     let error_message = 'too many requests';
@@ -21,4 +21,4 @@ const leakyBucketExample: RequestHandler = (req, res, next) => {
   }
 };
 
-export { leakyBucketExample as leakyBucket };
+export { leakyBucketMiddleware as leakyBucket };

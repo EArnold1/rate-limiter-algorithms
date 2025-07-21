@@ -3,14 +3,14 @@ import { limiter as fixedWindowLimiter } from '../algorithms/fixed-window/limite
 
 // An example on how to use the fixed window limiter
 
-const { make_request } = fixedWindowLimiter({
+const { makeRequest } = fixedWindowLimiter({
   maxRequests: 5,
   windowSize: 1 * 60 * 1000,
 });
 
 const fixedWindowMiddleware: RequestHandler = (req, res, next) => {
   try {
-    make_request(req.ip!);
+    makeRequest(req);
     next();
   } catch (error) {
     let error_message = 'too many requests';
