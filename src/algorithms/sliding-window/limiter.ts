@@ -12,16 +12,13 @@ function makeRequest(req: Request) {
 
   const now = new Date();
 
-  // remove from request list
-  // when the current time - the windowSize
-  // is greater than the request timestamp
-  while (
-    client.requests.length &&
-    client.requests[0].getTime() <= Math.abs(now.getTime() - store.windowSize)
-  ) {
-    client.requests.shift();
-    store.set(key, client);
-  }
+  // filter out request timestamps outside the current window
+  client.requests = client.requests.filter(
+    (timestamp) =>
+      timestamp.getTime() >= Math.abs(now.getTime() - store.windowSize)
+  );
+
+  store.set(key, client);
 
   if (client.requests.length >= store.maxRequests) {
     throw new Error('you have made too many requests');
