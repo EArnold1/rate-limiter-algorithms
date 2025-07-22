@@ -6,7 +6,7 @@ export function getIpAddress(req: Request) {
 
   if (!addr) throw new Error('ip address is required');
 
-  if (Array.isArray(addr)) return addr[0];
+  if (Array.isArray(addr)) return addr[0]; // TODO: handle properly
 
   return addr;
 }
